@@ -16,6 +16,8 @@ import {
   type WallLocation,
   type NewsArticle
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -41,168 +43,129 @@ export interface IStorage {
   }>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private donations: Map<number, Donation>;
-  private volunteers: Map<number, Volunteer>;
-  private contacts: Map<number, Contact>;
-  private wallLocations: Map<number, WallLocation>;
-  private newsArticles: Map<number, NewsArticle>;
-  private currentId: number;
-
+export class DatabaseStorage implements IStorage {
   constructor() {
-    this.users = new Map();
-    this.donations = new Map();
-    this.volunteers = new Map();
-    this.contacts = new Map();
-    this.wallLocations = new Map();
-    this.newsArticles = new Map();
-    this.currentId = 1;
-    
     this.seedData();
   }
 
-  private seedData() {
-    // Seed wall locations
-    const locations: Omit<WallLocation, 'id'>[] = [
-      {
-        name: "UET Main Campus",
-        address: "GT Road, Lahore",
-        latitude: "31.5804",
-        longitude: "74.3587",
-        status: "active",
-        lastRestocked: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-      },
-      {
-        name: "Jamia Mosque Gulberg",
-        address: "Main Boulevard, Gulberg III",
-        latitude: "31.5204",
-        longitude: "74.3587",
-        status: "active",
-        lastRestocked: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
-      },
-      {
-        name: "Bus Stop Katchi Abadi",
-        address: "Ravi Road, Near Shama Colony",
-        latitude: "31.6340",
-        longitude: "74.3723",
-        status: "needs_restock",
-        lastRestocked: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
-      }
-    ];
+  private async seedData() {
+    try {
+      // Check if data already exists
+      const existingLocations = await db.select().from(wallLocations).limit(1);
+      if (existingLocations.length > 0) return;
 
-    locations.forEach(location => {
-      const id = this.currentId++;
-      this.wallLocations.set(id, { id, ...location });
-    });
+      // Seed wall locations
+      const locations: Omit<WallLocation, 'id'>[] = [
+        {
+          name: "UET Main Campus",
+          address: "GT Road, Lahore",
+          latitude: "31.5804",
+          longitude: "74.3587",
+          status: "active",
+          lastRestocked: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        },
+        {
+          name: "Jamia Mosque Gulberg",
+          address: "Main Boulevard, Gulberg III",
+          latitude: "31.5204",
+          longitude: "74.3587",
+          status: "active",
+          lastRestocked: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        },
+        {
+          name: "Bus Stop Katchi Abadi",
+          address: "Ravi Road, Near Shama Colony",
+          latitude: "31.6340",
+          longitude: "74.3723",
+          status: "needs_restock",
+          lastRestocked: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        }
+      ];
 
-    // Seed news articles
-    const articles: Omit<NewsArticle, 'id'>[] = [
-      {
-        title: "New Wall of Hope Opens at GCU Campus",
-        excerpt: "Students from Government College University Lahore partnered with Re-Libas to establish the 13th Wall of Hope station, expanding our reach to serve more families...",
-        content: "Full article content would go here...",
-        category: "Installation",
-        imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
-        publishedAt: new Date("2024-03-15"),
-      },
-      {
-        title: "1000+ Families Served in Winter Drive",
-        excerpt: "Our winter collection drive successfully provided warm clothing to over 1000 families across Lahore, with special focus on children's winter wear and blankets...",
-        content: "Full article content would go here...",
-        category: "Impact Story",
-        imageUrl: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
-        publishedAt: new Date("2024-03-12"),
-      },
-      {
-        title: "Partnership with Local Mosques Expands",
-        excerpt: "Re-Libas announces new partnerships with 15 mosques across Lahore to establish permanent Wall of Hope stations in underserved communities...",
-        content: "Full article content would go here...",
-        category: "Partnership",
-        imageUrl: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
-        publishedAt: new Date("2024-03-10"),
-      }
-    ];
+      await db.insert(wallLocations).values(locations);
 
-    articles.forEach(article => {
-      const id = this.currentId++;
-      this.newsArticles.set(id, { id, ...article });
-    });
+      // Seed news articles
+      const articles: Omit<NewsArticle, 'id'>[] = [
+        {
+          title: "New Wall of Hope Opens at GCU Campus",
+          excerpt: "Students from Government College University Lahore partnered with Re-Libas to establish the 13th Wall of Hope station, expanding our reach to serve more families...",
+          content: "Full article content would go here...",
+          category: "Installation",
+          imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          publishedAt: new Date("2024-03-15"),
+        },
+        {
+          title: "1000+ Families Served in Winter Drive",
+          excerpt: "Our winter collection drive successfully provided warm clothing to over 1000 families across Lahore, with special focus on children's winter wear and blankets...",
+          content: "Full article content would go here...",
+          category: "Impact Story",
+          imageUrl: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          publishedAt: new Date("2024-03-12"),
+        },
+        {
+          title: "Partnership with Local Mosques Expands",
+          excerpt: "Re-Libas announces new partnerships with 15 mosques across Lahore to establish permanent Wall of Hope stations in underserved communities...",
+          content: "Full article content would go here...",
+          category: "Partnership",
+          imageUrl: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          publishedAt: new Date("2024-03-10"),
+        }
+      ];
+
+      await db.insert(newsArticles).values(articles);
+    } catch (error) {
+      console.error("Error seeding data:", error);
+    }
   }
 
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+    return result[0];
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const result = await db.insert(users).values(insertUser).returning();
+    return result[0];
   }
 
   async createDonation(insertDonation: InsertDonation): Promise<Donation> {
-    const id = this.currentId++;
-    const donation: Donation = {
-      ...insertDonation,
-      id,
-      status: "pending",
-      createdAt: new Date(),
-    };
-    this.donations.set(id, donation);
-    return donation;
+    const result = await db.insert(donations).values(insertDonation).returning();
+    return result[0];
   }
 
   async getDonations(): Promise<Donation[]> {
-    return Array.from(this.donations.values());
+    return await db.select().from(donations).orderBy(donations.createdAt);
   }
 
   async createVolunteer(insertVolunteer: InsertVolunteer): Promise<Volunteer> {
-    const id = this.currentId++;
-    const volunteer: Volunteer = {
-      ...insertVolunteer,
-      id,
-      status: "active",
-      createdAt: new Date(),
-    };
-    this.volunteers.set(id, volunteer);
-    return volunteer;
+    const result = await db.insert(volunteers).values(insertVolunteer).returning();
+    return result[0];
   }
 
   async getVolunteers(): Promise<Volunteer[]> {
-    return Array.from(this.volunteers.values());
+    return await db.select().from(volunteers).orderBy(volunteers.createdAt);
   }
 
   async createContact(insertContact: InsertContact): Promise<Contact> {
-    const id = this.currentId++;
-    const contact: Contact = {
-      ...insertContact,
-      id,
-      status: "unread",
-      createdAt: new Date(),
-    };
-    this.contacts.set(id, contact);
-    return contact;
+    const result = await db.insert(contacts).values(insertContact).returning();
+    return result[0];
   }
 
   async getContacts(): Promise<Contact[]> {
-    return Array.from(this.contacts.values());
+    return await db.select().from(contacts).orderBy(contacts.createdAt);
   }
 
   async getWallLocations(): Promise<WallLocation[]> {
-    return Array.from(this.wallLocations.values());
+    return await db.select().from(wallLocations);
   }
 
   async getNewsArticles(): Promise<NewsArticle[]> {
-    return Array.from(this.newsArticles.values()).sort(
-      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
+    return await db.select().from(newsArticles).orderBy(newsArticles.publishedAt);
   }
 
   async getStats(): Promise<{
@@ -211,13 +174,16 @@ export class MemStorage implements IStorage {
     wallsOfHope: number;
     volunteers: number;
   }> {
+    const wallCount = await db.select().from(wallLocations);
+    const volunteerCount = await db.select().from(volunteers);
+    
     return {
       clothesCollected: 2547,
       familiesServed: 1230,
-      wallsOfHope: this.wallLocations.size,
-      volunteers: this.volunteers.size + 156, // Include existing volunteers
+      wallsOfHope: wallCount.length,
+      volunteers: volunteerCount.length + 156,
     };
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
