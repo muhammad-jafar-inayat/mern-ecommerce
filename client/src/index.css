@@ -67,6 +67,7 @@
 @layer utilities {
   .gradient-bg {
     background: linear-gradient(135deg, hsl(var(--pakistan-green)) 0%, hsl(var(--pakistan-light-green)) 100%);
+    background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 50%, #f7931e 100%);
   }
   
   .pattern-overlay {

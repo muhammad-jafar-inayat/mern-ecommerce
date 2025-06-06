@@ -69,8 +69,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                  <p className="text-muted-foreground">contact@re-libas.org</p>
-                  <p className="text-muted-foreground">partnerships@re-libas.org</p>
+                  <p className="text-muted-foreground">amalfellows346@gmail.com</p>
+               
                 </div>
               </div>
               
@@ -80,8 +80,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                  <p className="text-muted-foreground">+92 42 XXX-XXXX</p>
-                  <p className="text-muted-foreground">+92 300 XXX-XXXX (WhatsApp)</p>
+                  <p className="text-muted-foreground">+92 344 881520 (Also WhatsApp)</p>
+        
                 </div>
               </div>
               

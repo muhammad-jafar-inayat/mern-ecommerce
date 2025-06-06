@@ -16,6 +16,7 @@ import {
   type WallLocation,
   type NewsArticle
 } from "@shared/schema";
+
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 
@@ -26,15 +27,19 @@ export interface IStorage {
   
   createDonation(donation: InsertDonation): Promise<Donation>;
   getDonations(): Promise<Donation[]>;
-  
+  deleteDonation(id: string): Promise<void>;
+
   createVolunteer(volunteer: InsertVolunteer): Promise<Volunteer>;
   getVolunteers(): Promise<Volunteer[]>;
-  
+  deleteVolunteer(id: string): Promise<void>;
+
   createContact(contact: InsertContact): Promise<Contact>;
   getContacts(): Promise<Contact[]>;
-  
+  deleteContact(id: string): Promise<void>;
+
   getWallLocations(): Promise<WallLocation[]>;
   getNewsArticles(): Promise<NewsArticle[]>;
+
   getStats(): Promise<{
     clothesCollected: number;
     familiesServed: number;
@@ -50,11 +55,9 @@ export class DatabaseStorage implements IStorage {
 
   private async seedData() {
     try {
-      // Check if data already exists
       const existingLocations = await db.select().from(wallLocations).limit(1);
       if (existingLocations.length > 0) return;
 
-      // Seed wall locations
       const locations: Omit<WallLocation, 'id'>[] = [
         {
           name: "UET Main Campus",
@@ -84,14 +87,13 @@ export class DatabaseStorage implements IStorage {
 
       await db.insert(wallLocations).values(locations);
 
-      // Seed news articles
       const articles: Omit<NewsArticle, 'id'>[] = [
         {
           title: "New Wall of Hope Opens at GCU Campus",
           excerpt: "Students from Government College University Lahore partnered with Re-Libas to establish the 13th Wall of Hope station, expanding our reach to serve more families...",
           content: "Full article content would go here...",
           category: "Installation",
-          imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          imageUrl: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
           publishedAt: new Date("2024-03-15"),
         },
         {
@@ -99,7 +101,7 @@ export class DatabaseStorage implements IStorage {
           excerpt: "Our winter collection drive successfully provided warm clothing to over 1000 families across Lahore, with special focus on children's winter wear and blankets...",
           content: "Full article content would go here...",
           category: "Impact Story",
-          imageUrl: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          imageUrl: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
           publishedAt: new Date("2024-03-12"),
         },
         {
@@ -107,7 +109,7 @@ export class DatabaseStorage implements IStorage {
           excerpt: "Re-Libas announces new partnerships with 15 mosques across Lahore to establish permanent Wall of Hope stations in underserved communities...",
           content: "Full article content would go here...",
           category: "Partnership",
-          imageUrl: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250",
+          imageUrl: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250",
           publishedAt: new Date("2024-03-10"),
         }
       ];
@@ -142,6 +144,10 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(donations).orderBy(donations.createdAt);
   }
 
+  async deleteDonation(id: string): Promise<void> {
+    await db.delete(donations).where(eq(donations.id, parseInt(id)));
+  }
+
   async createVolunteer(insertVolunteer: InsertVolunteer): Promise<Volunteer> {
     const result = await db.insert(volunteers).values(insertVolunteer).returning();
     return result[0];
@@ -151,6 +157,10 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(volunteers).orderBy(volunteers.createdAt);
   }
 
+  async deleteVolunteer(id: string): Promise<void> {
+    await db.delete(volunteers).where(eq(volunteers.id, parseInt(id)));
+  }
+
   async createContact(insertContact: InsertContact): Promise<Contact> {
     const result = await db.insert(contacts).values(insertContact).returning();
     return result[0];
@@ -158,6 +168,10 @@ export class DatabaseStorage implements IStorage {
 
   async getContacts(): Promise<Contact[]> {
     return await db.select().from(contacts).orderBy(contacts.createdAt);
+  }
+
+  async deleteContact(id: string): Promise<void> {
+    await db.delete(contacts).where(eq(contacts.id, parseInt(id)));
   }
 
   async getWallLocations(): Promise<WallLocation[]> {
@@ -178,12 +192,18 @@ export class DatabaseStorage implements IStorage {
     const volunteerCount = await db.select().from(volunteers);
     
     return {
-      clothesCollected: 2547,
-      familiesServed: 1230,
+      clothesCollected: 219,
+      familiesServed: 107,
       wallsOfHope: wallCount.length,
-      volunteers: volunteerCount.length + 156,
+      volunteers: volunteerCount.length + 125,
     };
   }
 }
 
+// Create an instance of the storage
 export const storage = new DatabaseStorage();
+
+// Export working delete functions
+export const deleteDonation = (id: string) => storage.deleteDonation(id);
+export const deleteVolunteer = (id: string) => storage.deleteVolunteer(id);
+export const deleteContact = (id: string) => storage.deleteContact(id);

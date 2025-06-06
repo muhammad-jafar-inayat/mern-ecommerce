@@ -7,25 +7,26 @@ export default function ImpactSection() {
   });
 
   const testimonials = [
+   {
+  content: "Re-Libas provided clothing when we needed it most. I feel connected to my community again.",
+  name: "Nazir Ahmed",
+  location: "Garhi Shahu, Lahore",
+  avatar: "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748605031/Screenshot_2025-05-30_163650_fb21wf.jpg?_s=public-apps"
+}
+,
     {
-      content: "The Wall of Hope near our mosque has been a blessing. My children now have warm clothes for winter, and I didn't have to compromise my dignity to get them.",
-      name: "Fatima K.",
-      location: "Gulberg, Lahore",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b7cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100"
-    },
-    {
-      content: "Being part of Re-Libas has taught me that small actions can create big changes. Every weekend we collect and sort clothes, and seeing families benefit makes it all worthwhile.",
-      name: "Ahmad R.",
-      location: "UET Student Volunteer",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100"
+      content: "Re-Libas taught me that small actions spark big change. Sorting clothes, I’ve seen how a simple gesture can bring warmth, dignity, and smiles.",
+      name: "Muhammad Jafar",
+      location: "Amal Fellow Volunteer",
+      avatar: "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748601946/Screenshot_2025-05-30_154521_fuh6kh.jpg?_s=public-apps"
     }
   ];
 
   const galleryImages = [
-    "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-    "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+    "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748604489/WOH_title_fgsglh.jpg?_s=public-apps",
+    "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748604490/20160730_164940_jm35uj.jpg?_s=public-apps",
+    "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748602582/UN0761229.jpg.960W_wwn5fl.jpg?_s=public-apps",
+    "https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748603293/UN0761214.jpg.960w.jpg_yrrvx7.jpg?_s=public-apps"
   ];
 
   return (
@@ -75,7 +76,7 @@ export default function ImpactSection() {
             <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
               <CardContent className="p-8 text-center">
                 <i className="fas fa-building text-4xl mb-4"></i>
-                <div className="text-3xl font-bold mb-2 counter-animation">8</div>
+                <div className="text-3xl font-bold mb-2 counter-animation">4</div>
                 <div className="text-sm opacity-90">Partner Institutions</div>
               </CardContent>
             </Card>
@@ -121,7 +122,7 @@ export default function ImpactSection() {
           </div>
           
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Wall of Hope Gallery</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">Gallery</h3>
             <div className="grid grid-cols-2 gap-4">
               {galleryImages.map((image, index) => (
                 <img

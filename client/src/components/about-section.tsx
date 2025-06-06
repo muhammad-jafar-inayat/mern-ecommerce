@@ -5,7 +5,7 @@ export default function AboutSection() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">About Re-Libas</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Re-Libas is a collaborative, student-led initiative across multiple universities in Pakistan, 
+            Re-Libas is a collaborative, youth-led initiative in Lahore-Pakistan, 
             aiming to restore dignity through clothing reuse with minimal cost and maximum impact.
           </p>
         </div>
@@ -13,7 +13,7 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <img
-              src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+              src="https://res.cloudinary.com/dbqvd268f/image/upload/fl_preserve_transparency/v1748601257/amal_fhodco.jpg?_s=public-apps"
               alt="Students organizing and sorting donated clothes"
               className="rounded-2xl shadow-lg"
             />
@@ -38,7 +38,7 @@ export default function AboutSection() {
                 <i className="fas fa-users text-xl"></i>
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Student-Led Network</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Youth-Led Network</h3>
                 <p className="text-muted-foreground">
                   Coordinated by Amal Fellows in collaboration with Kaar-e-Kamal Society, 
                   Blood Donation Society at UET Lahore, and other partner organizations.

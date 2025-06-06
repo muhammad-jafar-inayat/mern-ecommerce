@@ -43,13 +43,18 @@ export default function WallOfHopeSection() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Interactive Map Placeholder */}
           <div className="lg:col-span-2">
-            <Card className="h-96 flex items-center justify-center border-2 border-dashed border-gray-300">
-              <CardContent className="text-center">
-                <i className="fas fa-map-marked-alt text-6xl text-primary mb-4"></i>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Interactive Map</h3>
-                <p className="text-muted-foreground">Real-time locations of all Wall of Hope stations</p>
-              </CardContent>
-            </Card>
+            <Card className="h-96 overflow-hidden border">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d521.2165578516367!2d74.35442979247591!3d31.58081470845078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39191bf3bdcf7321%3A0xfbd03579dd842622!2sBhola%20Canteen!5e0!3m2!1sen!2s!4v1748597094563!5m2!1sen!2s"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </Card>
+
           </div>
           
           {/* Location List */}

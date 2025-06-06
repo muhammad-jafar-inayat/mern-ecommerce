@@ -28,4 +28,12 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
+  server: {
+  fs: {
+    strict: false,
+  },
+  // Add this to fallback to index.html for SPA routing
+  //historyApiFallback: true, // ❌ This causes the error
+}
+
 });

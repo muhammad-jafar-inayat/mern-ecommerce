@@ -1,7 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertDonationSchema, insertVolunteerSchema, insertContactSchema } from "@shared/schema";
+import {
+  insertDonationSchema,
+  insertVolunteerSchema,
+  insertContactSchema,
+} from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -50,7 +54,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create volunteer registration
+  // Get volunteers (formatted for frontend with ID)
+  // Get volunteers (for admin or frontend)
+app.get("/api/volunteers", async (req, res) => {
+  try {
+    const volunteers = await storage.getVolunteers();
+    res.json(volunteers); // Return raw data like donations/contacts
+  } catch (error) {
+    console.error("Error fetching volunteers:", error);
+    res.status(500).json({ message: "Failed to fetch volunteers" });
+  }
+});
+
+
+  // Create volunteer request
   app.post("/api/volunteers", async (req, res) => {
     try {
       const validatedData = insertVolunteerSchema.parse(req.body);
@@ -60,7 +77,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ message: "Invalid volunteer data", errors: error.errors });
       } else {
-        res.status(500).json({ message: "Failed to register volunteer" });
+        console.error("Error creating volunteer:", error);
+        res.status(500).json({ message: "Failed to create volunteer" });
       }
     }
   });
@@ -87,16 +105,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(donations);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch donations" });
-    }
-  });
-
-  // Get volunteers (for admin)
-  app.get("/api/volunteers", async (req, res) => {
-    try {
-      const volunteers = await storage.getVolunteers();
-      res.json(volunteers);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to fetch volunteers" });
     }
   });
 

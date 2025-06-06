@@ -114,8 +114,8 @@ export default function GetInvolvedSection() {
     <section id="get-involved" className="py-20 gradient-bg pattern-overlay">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Get Involved</h2>
-          <p className="text-xl text-gray-100 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-black mb-4">Get Involved</h2>
+          <p className="text-xl text-black max-w-3xl mx-auto">
             Join the Re-Libas movement and help us create a more equitable Pakistan. 
             Every contribution, big or small, makes a difference.
           </p>

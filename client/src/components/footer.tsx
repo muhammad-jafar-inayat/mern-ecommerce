@@ -19,18 +19,18 @@ export default function Footer() {
               across Pakistan through Wall of Hope stations, ensuring dignified access to clothing for all.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
+              <a href="https://web.facebook.com/profile.php?id=61577018034098" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-facebook text-xl"></i>
               </a>
-              <a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
+              <a href="https://www.instagram.com/relibas346/" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-instagram text-xl"></i>
               </a>
-              <a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
+              {/*<a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-twitter text-xl"></i>
               </a>
               <a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-linkedin text-xl"></i>
-              </a>
+              </a>*/}
             </div>
           </div>
           
@@ -113,7 +113,7 @@ export default function Footer() {
         
         <div className="border-t border-white/20 mt-12 pt-8 flex flex-col lg:flex-row justify-between items-center">
           <p className="text-gray-200 text-sm">
-            © 2024 Re-Libas. All rights reserved. Made with ❤️ by students for the community.
+            © 2025 Re-Libas. All rights reserved. Made with ❤️ by Youth for the community.
           </p>
           <div className="flex items-center space-x-6 mt-4 lg:mt-0">
             <span className="text-sm text-gray-200">Supported by:</span>

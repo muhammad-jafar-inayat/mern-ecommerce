@@ -1,10 +1,44 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import 'dotenv/config';
+import * as storage from "./storage";
+
+
+
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// DELETE donation
+app.delete("/api/donations/:id", async (req, res) => {
+  try {
+    await storage.deleteDonation(req.params.id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete donation" });
+  }
+});
+
+// DELETE volunteer
+app.delete("/api/volunteers/:id", async (req, res) => {
+  try {
+    await storage.deleteVolunteer(req.params.id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete volunteer" });
+  }
+});
+
+// DELETE contact message
+app.delete("/api/contacts/:id", async (req, res) => {
+  try {
+    await storage.deleteContact(req.params.id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete message" });
+  }
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -59,12 +93,8 @@ app.use((req, res, next) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+ const port = 5000;
+server.listen(port, () => {
+  log(`serving on port ${port}`);
+});
 })();
