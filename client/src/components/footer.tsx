@@ -19,10 +19,10 @@ export default function Footer() {
               across Pakistan through Wall of Hope stations, ensuring dignified access to clothing for all.
             </p>
             <div className="flex space-x-4">
-              <a href="https://web.facebook.com/profile.php?id=61577018034098" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61576774906944" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-facebook text-xl"></i>
               </a>
-              <a href="https://www.instagram.com/relibas346/" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
+              <a href="https://www.instagram.com/relibaas346/" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
                 <i className="fab fa-instagram text-xl"></i>
               </a>
               {/*<a href="#" className="bg-white/10 hover:bg-white/20 p-3 rounded-lg transition-colors">
