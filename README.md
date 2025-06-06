@@ -97,45 +97,11 @@ SESSION_SECRET=your_session_secret
 npm run dev
 ```
 
-The application will be available at `http://localhost:5000`
-
-## 📦 Deployment
-
-### Backend Deployment (Vercel)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Configure environment variables in Vercel dashboard
-4. Deploy
-
-### Frontend Deployment (Vercel)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Configure build settings:
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-4. Deploy
-
-## 🔧 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run check` - Type checking
-- `npm run db:push` - Push database schema changes
-
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👥 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## 📧 Contact
 
-Your Name - your.email@example.com
-Project Link: https://github.com/your-username/mern-ecommerce 
+Your Name - clicktojafar457@gmail.com
+Project Link: https://github.com/muhammad-jafar-inayat/mern-ecommerce
