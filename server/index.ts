@@ -3,11 +3,16 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import 'dotenv/config';
 import * as storage from "./storage";
-
-
-
+import cors from 'cors';
 
 const app = express();
+
+// Enable CORS for Vercel frontend
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'https://mern-ecommerce.vercel.app',
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // DELETE donation
@@ -93,8 +98,8 @@ app.use((req, res, next) => {
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
- const port = 5000;
-server.listen(port, () => {
-  log(`serving on port ${port}`);
-});
+  const port = process.env.PORT || 5000;
+  server.listen(port, () => {
+    log(`serving on port ${port}`);
+  });
 })();
