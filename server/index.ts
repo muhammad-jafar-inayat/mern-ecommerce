@@ -9,7 +9,7 @@ const app = express();
 
 // Enable CORS for Vercel frontend
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://mern-ecommerce.vercel.app',
+  origin: process.env.FRONTEND_URL || 'https://relibas.vercel.app',
   credentials: true
 }));
 
